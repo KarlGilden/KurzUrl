@@ -8,25 +8,39 @@ namespace KurzUrl.Controllers
     [Route("[controller]")]
     public class UrlController : ControllerBase
     {
-        private readonly UrlService _UrlService;
+        private readonly IUrlService _UrlService;
 
-        public UrlController(UrlService UrlService) 
+        public UrlController(IUrlService UrlService) 
         {
             _UrlService = UrlService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<Url>> GetOriginalLink(String id)
+        [Route("[controller]/GetUrl")]
+        public async Task<ActionResult<Url>> GetUrl(String id)
         {
-            _UrlService.GetOriginalUrl(id);
+            _UrlService.GetUrl(id);
             return Ok();
         }
 
+
         [HttpPost]
-        public async Task<ActionResult<Url>> CreateLink(String OriginalUrl)
+        [Route("[controller]/CreateUrl")]
+        public async Task<ActionResult<Url>> CreateUrl(String OriginalUrl)
         {
             String ShortUrl = _UrlService.ShortenUrl(OriginalUrl);
-            _UrlService.CreateUrl(OriginalUrl, ShortUrl);
+            Url newUrl = _UrlService.CreateUrl(OriginalUrl, ShortUrl);
+
+            return CreatedAtAction(nameof(GetUrl), new { id = newUrl.Id }, newUrl);
+
+        }
+
+
+        [HttpGet]
+        [Route("[controller]/GetOriginalUrl")]
+        public async Task<ActionResult<Url>> GetOriginalUrl(String id)
+        {
+            _UrlService.GetOriginalUrl(id);
             return Ok();
         }
     }

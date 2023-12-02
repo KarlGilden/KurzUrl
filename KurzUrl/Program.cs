@@ -1,4 +1,5 @@
 using KurzUrl.Contexts;
+using KurzUrl.Services;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 
@@ -11,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>();
+builder.Services.AddScoped<IUrlService, UrlService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

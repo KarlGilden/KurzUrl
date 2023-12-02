@@ -1,5 +1,6 @@
 ﻿using KurzUrl.Contexts;
 using KurzUrl.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KurzUrl.Services
 {
@@ -19,19 +20,30 @@ namespace KurzUrl.Services
 
         public Url CreateUrl(String OriginalUrl, String ShortUrl)
         {
-            Url LinkObj = new Url
+            Url UrlObj = new Url
             {
+                Id = Guid.NewGuid().ToString(),
                 Clicks = 0,
                 OriginalUrl = OriginalUrl,
                 ShortUrl = ShortUrl
             };
 
-            return LinkObj;
-        }
+            _context.Urls.Add(UrlObj);
 
+            _context.SaveChanges();
+
+            return UrlObj;
+        }
+        
         public string GetOriginalUrl(String Url)
         {
             throw new NotImplementedException();
+        }
+
+        public Url GetUrl(String Id)
+        {
+            Url url = _context.Urls.First(u => u.Id == Id);
+            return url;
         }
     }
 }

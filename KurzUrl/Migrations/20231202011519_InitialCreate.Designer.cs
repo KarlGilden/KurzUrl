@@ -2,23 +2,26 @@
 using KurzUrl.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace KurzUrl.Migrations
 {
-    [DbContext(typeof(ShortLinkContext))]
-    partial class ShortLinkContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DataContext))]
+    [Migration("20231202011519_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("KurzUrl.Models.ShortLink", b =>
+            modelBuilder.Entity("KurzUrl.Models.Url", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -36,7 +39,7 @@ namespace KurzUrl.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShortLinks");
+                    b.ToTable("Urls");
                 });
 #pragma warning restore 612, 618
         }

@@ -10,9 +10,8 @@ namespace KurzUrl.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
             migrationBuilder.CreateTable(
-                name: "ShortLinks",
+                name: "Urls",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false)
@@ -25,7 +24,7 @@ namespace KurzUrl.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShortLinks", x => x.Id);
+                    table.PrimaryKey("PK_Urls", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
         }
@@ -34,7 +33,7 @@ namespace KurzUrl.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ShortLinks");
+                name: "Urls");
         }
     }
 }

@@ -5,11 +5,11 @@ using System.Reflection.Metadata;
 
 namespace KurzUrl.Contexts
 {
-    public class ShortLinkContext: DbContext
+    public class DataContext: DbContext
     {
-        static readonly string connectionString = "Server=aws.connect.psdb.cloud;Database=kurz-link;user=5ss6yfq2ifk8m6ia6ou5;password=pscale_pw_5h0b4OYSEtf1A3GG0suq3jP0A3ZhvVDAfxdxc8pqp7O;SslMode=VerifyFull;";
+        static readonly string connectionString = "Server=aws.connect.psdb.cloud;Database=kurz-link;user=7gmpj1uzqiy8uuqabzlk;password=pscale_pw_AVEQdXeQCjYVtt34t6WYshXRNgKKkzo2CMknW57G0AT;SslMode=VerifyFull;";
 
-        public DbSet<ShortLink> ShortLinks { get; set; }
+        public DbSet<Url> Urls { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

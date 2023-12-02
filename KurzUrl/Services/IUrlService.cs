@@ -6,7 +6,7 @@ namespace KurzUrl.Services
     {
         Url GetUrl(String Id);
         Url CreateUrl(String OriginalUrl, String ShortUrl);
-        String GetOriginalUrl(String Url);
+        String GetOriginalUrl(String ShortUrl);
 
         String ShortenUrl(String OriginalUrl);
 

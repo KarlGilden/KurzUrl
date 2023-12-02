@@ -38,10 +38,10 @@ namespace KurzUrl.Controllers
 
         [HttpGet]
         [Route("[controller]/GetOriginalUrl")]
-        public async Task<ActionResult<Url>> GetOriginalUrl(String id)
+        public async Task<ActionResult<Url>> GetOriginalUrl(String ShortUrl)
         {
-            _UrlService.GetOriginalUrl(id);
-            return Ok();
+            String OriginalUrl = _UrlService.GetOriginalUrl(ShortUrl);
+            return Ok(OriginalUrl);
         }
     }
 }

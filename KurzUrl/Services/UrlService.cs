@@ -35,9 +35,10 @@ namespace KurzUrl.Services
             return UrlObj;
         }
         
-        public string GetOriginalUrl(String Url)
+        public String GetOriginalUrl(String ShortUrl)
         {
-            throw new NotImplementedException();
+            String OriginalUrl = _context.Urls.First(u => u.ShortUrl == ShortUrl).OriginalUrl;
+            return OriginalUrl;
         }
 
         public Url GetUrl(String Id)

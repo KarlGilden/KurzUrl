@@ -7,7 +7,7 @@ namespace KurzUrl.Contexts
 {
     public class DataContext: DbContext
     {
-        static readonly string connectionString = "server=aws.connect.psdb.cloud;user=84xlbjy5l391ybxqqngz;database=kurz-link;port=3306;password=pscale_pw_VxDtka0fNhc2wwmi8axl4NKWCQjBTtB7MAimSGHKxlv;SslMode=VerifyFull";
+        static readonly string connectionString = "server=aws.connect.psdb.cloud;user=6cv5dlbue13r4w17z3mi;database=kurz-link;port=3306;password=pscale_pw_ADeatBQLtY7kt4g3sim97nruxKaSEolY7t223BhjB7;SslMode=VerifyFull";
 
         public DbSet<Url> Urls { get; set; }
 

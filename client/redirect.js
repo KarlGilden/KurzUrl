@@ -1,7 +1,7 @@
 import * as util from './util.js'
 
-const redirect = async () => {
-    const redirectUrl = await util.getOriginalUrl();
+const redirect = async (slug) => {
+    const redirectUrl = await util.getOriginalUrl(slug);
     window.location.href = redirectUrl;
 };
 

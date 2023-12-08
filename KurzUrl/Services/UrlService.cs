@@ -15,17 +15,16 @@ namespace KurzUrl.Services
 
         public String ShortenUrl(String OriginalUrl)
         {
-            return OriginalUrl;
+            return Guid.NewGuid().ToString();
         }
 
-        public Url CreateUrl(String OriginalUrl, String ShortUrl)
+        public Url CreateUrl(String OriginalUrl, String Slug)
         {
             Url UrlObj = new Url
             {
-                Id = Guid.NewGuid().ToString(),
+                Slug = Slug,
                 Clicks = 0,
-                OriginalUrl = OriginalUrl,
-                ShortUrl = ShortUrl
+                OriginalUrl = OriginalUrl
             };
 
             _context.Urls.Add(UrlObj);
@@ -35,15 +34,15 @@ namespace KurzUrl.Services
             return UrlObj;
         }
         
-        public String GetOriginalUrl(String ShortUrl)
+        public String GetOriginalUrl(String Slug)
         {
-            String OriginalUrl = _context.Urls.First(u => u.ShortUrl == ShortUrl).OriginalUrl;
+            String OriginalUrl = _context.Urls.First(u => u.Slug == Slug).OriginalUrl;
             return OriginalUrl;
         }
 
-        public Url GetUrl(String Id)
+        public Url GetUrl(String Slug)
         {
-            Url url = _context.Urls.First(u => u.Id == Id);
+            Url url = _context.Urls.First(u => u.Slug == Slug);
             return url;
         }
     }

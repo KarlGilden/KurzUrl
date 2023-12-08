@@ -6,11 +6,9 @@ namespace KurzUrl.Models
     {
         [Key]
         [Required]
-        public String Id {  get; set; }
+        public String Slug {  get; set; }
         [Required]
         public String OriginalUrl {  get; set; }
-        [Required]
-        public required String ShortUrl { get; set; }
         [Required]
         public required Int16 Clicks { get; set; }
 

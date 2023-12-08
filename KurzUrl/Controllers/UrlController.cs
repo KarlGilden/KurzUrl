@@ -17,9 +17,9 @@ namespace KurzUrl.Controllers
 
         [HttpGet]
         [Route("[controller]/GetUrl")]
-        public async Task<ActionResult<Url>> GetUrl(String id)
+        public async Task<ActionResult<Url>> GetUrl(String Slug)
         {
-            _UrlService.GetUrl(id);
+            _UrlService.GetUrl(Slug); 
             return Ok();
         }
 
@@ -28,19 +28,19 @@ namespace KurzUrl.Controllers
         [Route("[controller]/CreateUrl")]
         public async Task<ActionResult<Url>> CreateUrl(String OriginalUrl)
         {
-            String ShortUrl = _UrlService.ShortenUrl(OriginalUrl);
-            Url newUrl = _UrlService.CreateUrl(OriginalUrl, ShortUrl);
+            String Slug = _UrlService.ShortenUrl(OriginalUrl);
+            Url newUrl = _UrlService.CreateUrl(OriginalUrl, Slug);
 
-            return CreatedAtAction(nameof(GetUrl), new { id = newUrl.Id }, newUrl);
+            return CreatedAtAction(nameof(GetUrl), new { slug = newUrl.Slug }, newUrl);
 
         }
 
 
         [HttpGet]
         [Route("[controller]/GetOriginalUrl")]
-        public async Task<ActionResult<Url>> GetOriginalUrl(String ShortUrl)
+        public async Task<ActionResult<Url>> GetOriginalUrl(String Slug)
         {
-            String OriginalUrl = _UrlService.GetOriginalUrl(ShortUrl);
+            String OriginalUrl = _UrlService.GetOriginalUrl(Slug);
             return Ok(OriginalUrl);
         }
     }

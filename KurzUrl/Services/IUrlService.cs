@@ -4,9 +4,9 @@ namespace KurzUrl.Services
 {
     public interface IUrlService
     {
-        Url GetUrl(String Id);
-        Url CreateUrl(String OriginalUrl, String ShortUrl);
-        String GetOriginalUrl(String ShortUrl);
+        Url GetUrl(String Slug);
+        Url CreateUrl(String OriginalUrl, String Slug);
+        String GetOriginalUrl(String Slug);
 
         String ShortenUrl(String OriginalUrl);
 

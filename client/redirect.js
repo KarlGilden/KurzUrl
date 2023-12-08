@@ -1,4 +1,4 @@
-import * as util from './util'
+import * as util from './util.js'
 
 const redirect = async () => {
     const redirectUrl = await util.getOriginalUrl();

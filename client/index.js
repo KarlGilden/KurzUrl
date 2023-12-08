@@ -1,13 +1,7 @@
+import * as util from './util.js'
+
 //functions
-const getShortUrl = async (url) => {
-    const shortUrl = await fetch(`${baseAPI}/Url/Url/CreateUrl?OriginalUrl=${url}`, {
-        method: "POST"
-    });
-
-    return await shortUrl.json();
-}
-
-const showShortUrl = (url) => {
+const displayShortUrl = (url) => {
     const shortUrl = baseURL + url.slug;
     const outputContainer = document.getElementById("container-output")
 
@@ -22,6 +16,7 @@ const showShortUrl = (url) => {
     outputContainer.innerHTML = outputContent;
 }
 
+
 const copyUrl = () => {
   // Get the text field
   var copyText = document.getElementById("short-url");
@@ -30,32 +25,11 @@ const copyUrl = () => {
   navigator.clipboard.writeText(copyText.textContent);
 };
 
-const onInitLoad = () => {
-    const slugs = baseURL.split("/");
-
-    if(slugs.length > 1){
-        redirect(slugs[1]);
-    }
-};
-
-const redirect = async (slug) => {
-    const originalUrl = await getOriginalUrl(slug);
-
-    window.location.replace(originalUrl);
-}
-
-const getOriginalUrl = async () =>{
-    const originalUrl = await fetch(`${baseAPI}/Url/Url/GetOriginalUrl?Slug=${slug}`, {
-        method: "GET"
-    });
-
-    return await originalUrl.json();
-};
 
 // globals
-const baseAPI = "https://localhost:7114";
 const baseURL = window.location.href;
 const urlForm = document.getElementById("form-url");
+
 
 // submit listener
 urlForm.addEventListener("submit", async (e)=>{
@@ -63,9 +37,7 @@ urlForm.addEventListener("submit", async (e)=>{
 
     let urlInput = document.getElementById("input-url");
 
-    const shortUrl = await getShortUrl(urlInput.value);
+    const shortUrl = await util.getShortUrl(urlInput.value);
 
-    showShortUrl(shortUrl);
+    displayShortUrl(shortUrl);
 });
-
-onInitLoad();

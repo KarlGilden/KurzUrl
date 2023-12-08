@@ -8,7 +8,7 @@ export const getShortUrl = async (url) => {
     return await shortUrl.json();
 }
 
-export const getOriginalUrl = async (slug) =>{
+export const getOriginalUrl = async (slug) => {
     const originalUrl = await fetch(`${baseAPI}/Url/Url/GetOriginalUrl?Slug=${slug}`, {
         method: "GET",
         headers:{
@@ -18,3 +18,12 @@ export const getOriginalUrl = async (slug) =>{
 
     return await originalUrl.text();
 };
+
+export const validateUrl = (url) => {
+    try{
+        new URL("/", url);
+        return true;
+    }catch{
+        return false;
+    }
+}

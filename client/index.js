@@ -2,6 +2,7 @@ import * as util from './util.js'
 
 //functions
 const displayShortUrl = (url) => {
+
     const shortUrl = baseURL + url.slug;
     const outputContainer = document.getElementById("container-output")
 
@@ -14,6 +15,11 @@ const displayShortUrl = (url) => {
     </div>`
 
     outputContainer.innerHTML = outputContent;
+}
+
+const displayError = () => {
+    const outputContainer = document.getElementById("container-output")
+    outputContainer.textContent = "Invalid Url"
 }
 
 
@@ -37,7 +43,13 @@ urlForm.addEventListener("submit", async (e)=>{
 
     let urlInput = document.getElementById("input-url");
 
-    const shortUrl = await util.getShortUrl(urlInput.value);
+    const isUrlValid = util.validateUrl(urlInput.value);
 
-    displayShortUrl(shortUrl);
+    if(isUrlValid){
+        const shortUrl = await util.getShortUrl(urlInput.value);
+        displayShortUrl(shortUrl);
+    }else{
+        displayError();
+    }
+
 });

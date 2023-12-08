@@ -10,8 +10,11 @@ export const getShortUrl = async (url) => {
 
 export const getOriginalUrl = async (slug) =>{
     const originalUrl = await fetch(`${baseAPI}/Url/Url/GetOriginalUrl?Slug=${slug}`, {
-        method: "GET"
+        method: "GET",
+        headers:{
+            "Content-Type": "text/plain"
+        }
     });
 
-    return await originalUrl.json();
+    return await originalUrl.text();
 };

@@ -1,7 +1,7 @@
-const baseAPI = "https://localhost:7114";
+const baseAPI = "https://kurzurlservice.azurewebsites.net"//"https://localhost:7114";
 
 export const getShortUrl = async (url) => {
-    const shortUrl = await fetch(`${baseAPI}/Url/Url/CreateUrl?OriginalUrl=${url}`, {
+    const shortUrl = await fetch(`${baseAPI}/Url/CreateUrl?OriginalUrl=${url}`, {
         method: "POST"
     });
 
@@ -9,7 +9,7 @@ export const getShortUrl = async (url) => {
 }
 
 export const getOriginalUrl = async (slug) => {
-    const originalUrl = await fetch(`${baseAPI}/Url/Url/GetOriginalUrl?Slug=${slug}`, {
+    const originalUrl = await fetch(`${baseAPI}/Url/GetOriginalUrl?Slug=${slug}`, {
         method: "GET",
         headers:{
             "Content-Type": "text/plain"

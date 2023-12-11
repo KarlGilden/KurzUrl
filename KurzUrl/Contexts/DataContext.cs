@@ -8,18 +8,15 @@ namespace KurzUrl.Contexts
     public class DataContext: DbContext
     {
 
-        private readonly IConfiguration Configuration;
-
-        public DataContext(IConfiguration configuration)
+        public DataContext()
         {
-            Configuration = configuration;
+        }
+
+        public DataContext(DbContextOptions<DataContext> options)
+            : base(options)
+        {
         }
 
         public DbSet<Url> Urls { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySql(Configuration["ConnectionStrings:Default"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:Default"]));
-        }
     }
 }

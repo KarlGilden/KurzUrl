@@ -1,6 +1,6 @@
 ﻿using KurzUrl.Contexts;
 using KurzUrl.Models;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace KurzUrl.Services
 {
@@ -13,9 +13,29 @@ namespace KurzUrl.Services
             _context = context;
         }
 
-        public String ShortenUrl(String OriginalUrl)
+        public async Task<String> ShortenUrl(String OriginalUrl)
         {
-            return Guid.NewGuid().ToString();
+            const int NumberOfChars = 7;
+            const String Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random _random = new Random();
+
+            var codeChars = new char[NumberOfChars];
+
+            while(true)
+            {
+                for (var i = 0; i < NumberOfChars; i++)
+                {
+                    var randomIndex = _random.Next(Chars.Length - 1);
+                    codeChars[i] = Chars[randomIndex];
+                }
+
+                var code = new string(codeChars);
+
+                if (!await _context.Urls.AnyAsync(s => s.Slug == code))
+                {
+                    return code;
+                }
+            }
         }
 
         public Url CreateUrl(String OriginalUrl, String Slug)

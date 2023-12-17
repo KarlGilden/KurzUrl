@@ -35,7 +35,7 @@ namespace KurzUrl.Controllers
         [Route("CreateUrl")]
         public async Task<ActionResult<Url>> CreateUrl(String OriginalUrl)
         {
-            String Slug = _UrlService.ShortenUrl(OriginalUrl);
+            String Slug = await _UrlService.ShortenUrl(OriginalUrl);
             Url newUrl = _UrlService.CreateUrl(OriginalUrl, Slug);
 
             return CreatedAtAction(nameof(GetUrl), new { slug = newUrl.Slug }, newUrl);

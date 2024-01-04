@@ -56,12 +56,6 @@ namespace KurzUrl.Services
             return UrlObj;
         }
         
-        public string GetOriginalUrl(string Slug)
-        {
-            string OriginalUrl = _context.Urls.First(u => u.Slug == Slug).OriginalUrl;
-            return OriginalUrl;
-        }
-
         public Url GetUrl(string Slug)
         {
             try

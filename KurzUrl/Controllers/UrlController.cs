@@ -37,12 +37,14 @@ namespace KurzUrl.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<Url>> CreateUrl([FromBody] string originalUrl)
+        public async Task<ActionResult<Url>> CreateUrl([FromBody]UrlDto url)
         {
-            if (originalUrl == null)
+            if (url == null)
             {
                 return BadRequest("Body request not found");
             }
+
+            string originalUrl = url.OriginalUrl;
 
             Url newUrl = await _UrlService.CreateUrl(originalUrl);
 

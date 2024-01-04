@@ -13,10 +13,10 @@ namespace KurzUrl.Services
             _context = context;
         }
 
-        public async Task<String> ShortenUrl(String OriginalUrl)
+        public async Task<string> ShortenUrl(string OriginalUrl)
         {
             const int NumberOfChars = 7;
-            const String Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             Random _random = new Random();
 
             var codeChars = new char[NumberOfChars];
@@ -38,13 +38,15 @@ namespace KurzUrl.Services
             }
         }
 
-        public Url CreateUrl(String OriginalUrl, String Slug)
+        public async Task<Url> CreateUrl(string originalUrl)
         {
-            Url UrlObj = new Url
+            string slug = await ShortenUrl(originalUrl);
+
+            Url UrlObj = new()
             {
-                Slug = Slug,
+                Slug = slug,
                 Clicks = 0,
-                OriginalUrl = OriginalUrl
+                OriginalUrl = originalUrl
             };
 
             _context.Urls.Add(UrlObj);
@@ -54,16 +56,25 @@ namespace KurzUrl.Services
             return UrlObj;
         }
         
-        public String GetOriginalUrl(String Slug)
+        public string GetOriginalUrl(string Slug)
         {
-            String OriginalUrl = _context.Urls.First(u => u.Slug == Slug).OriginalUrl;
+            string OriginalUrl = _context.Urls.First(u => u.Slug == Slug).OriginalUrl;
             return OriginalUrl;
         }
 
-        public Url GetUrl(String Slug)
+        public Url GetUrl(string Slug)
         {
-            Url url = _context.Urls.First(u => u.Slug == Slug);
-            return url;
+            try
+            {
+                Url url = _context.Urls.First(u => u.Slug == Slug);
+
+                return url;
+            }
+            catch
+            {
+                return null;
+            }
+
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using KurzUrl.Contexts;
 using KurzUrl.Models;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace KurzUrl.Services
 {
@@ -13,18 +13,40 @@ namespace KurzUrl.Services
             _context = context;
         }
 
-        public String ShortenUrl(String OriginalUrl)
+        public async Task<string> ShortenUrl(string OriginalUrl)
         {
-            return Guid.NewGuid().ToString();
+            const int NumberOfChars = 7;
+            const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random _random = new Random();
+
+            var codeChars = new char[NumberOfChars];
+
+            while(true)
+            {
+                for (var i = 0; i < NumberOfChars; i++)
+                {
+                    var randomIndex = _random.Next(Chars.Length - 1);
+                    codeChars[i] = Chars[randomIndex];
+                }
+
+                var code = new string(codeChars);
+
+                if (!await _context.Urls.AnyAsync(s => s.Slug == code))
+                {
+                    return code;
+                }
+            }
         }
 
-        public Url CreateUrl(String OriginalUrl, String Slug)
+        public async Task<Url> CreateUrl(string originalUrl)
         {
-            Url UrlObj = new Url
+            string slug = await ShortenUrl(originalUrl);
+
+            Url UrlObj = new()
             {
-                Slug = Slug,
+                Slug = slug,
                 Clicks = 0,
-                OriginalUrl = OriginalUrl
+                OriginalUrl = originalUrl
             };
 
             _context.Urls.Add(UrlObj);
@@ -34,16 +56,19 @@ namespace KurzUrl.Services
             return UrlObj;
         }
         
-        public String GetOriginalUrl(String Slug)
+        public Url GetUrl(string Slug)
         {
-            String OriginalUrl = _context.Urls.First(u => u.Slug == Slug).OriginalUrl;
-            return OriginalUrl;
-        }
+            try
+            {
+                Url url = _context.Urls.First(u => u.Slug == Slug);
 
-        public Url GetUrl(String Slug)
-        {
-            Url url = _context.Urls.First(u => u.Slug == Slug);
-            return url;
+                return url;
+            }
+            catch
+            {
+                return null;
+            }
+
         }
     }
 }

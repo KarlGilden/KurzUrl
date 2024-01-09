@@ -31,7 +31,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseMySql(client.GetSecret("ConnectionString").Value.Value.ToString(), ServerVersion.AutoDetect(client.GetSecret("ConnectionString").Value.Value.ToString()));
-
+    //options.UseMySql(builder.Configuration["ConnectionStrings:Default"], ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:Default"]));
 });
 builder.Services.AddScoped<IUrlService, UrlService>();
 builder.Services.AddCors(options =>
@@ -40,6 +40,7 @@ builder.Services.AddCors(options =>
                       policy =>
                       {
                           policy.WithOrigins("*");
+                          policy.AllowAnyHeader();
                       });
 });
 var app = builder.Build();

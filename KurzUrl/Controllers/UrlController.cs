@@ -16,39 +16,48 @@ namespace KurzUrl.Controllers
         }
 
         [HttpGet]
-        [Route("/")]
-        public async Task<ActionResult<String>> Hello()
+        public ActionResult<string> Hello()
         {
             return Ok("KurzUrl");
         }
 
-        [HttpGet]
-        [Route("GetUrl")]
-        public async Task<ActionResult<Url>> GetUrl(String Slug)
+        [HttpGet("{slug}")]
+        public ActionResult<Url> GetUrl(string slug)
         {
-            _UrlService.GetUrl(Slug); 
-            return Ok();
+
+            Url url = _UrlService.GetUrl(slug);
+
+            if (url == null)
+            {
+                return BadRequest("Url not found");
+            }
+
+            return Ok(url);
         }
 
 
         [HttpPost]
-        [Route("CreateUrl")]
-        public async Task<ActionResult<Url>> CreateUrl(String OriginalUrl)
+        public async Task<ActionResult<Url>> CreateUrl([FromBody]UrlDto url)
         {
-            String Slug = _UrlService.ShortenUrl(OriginalUrl);
-            Url newUrl = _UrlService.CreateUrl(OriginalUrl, Slug);
+            if (url == null)
+            {
+                return BadRequest("Body request not found");
+            }
+
+            string originalUrl = url.OriginalUrl;
+
+            Url newUrl = await _UrlService.CreateUrl(originalUrl);
 
             return CreatedAtAction(nameof(GetUrl), new { slug = newUrl.Slug }, newUrl);
 
         }
 
-
+/*
         [HttpGet]
-        [Route("GetOriginalUrl")]
-        public async Task<ActionResult<Url>> GetOriginalUrl(String Slug)
+        public ActionResult<String> GetOriginalUrl(String slug)
         {
-            String OriginalUrl = _UrlService.GetOriginalUrl(Slug);
+            String OriginalUrl = _UrlService.GetOriginalUrl(slug);
             return Ok(OriginalUrl);
-        }
+        }*/
     }
 }

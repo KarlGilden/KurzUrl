@@ -1,22 +1,30 @@
 const baseAPI = "https://kurzurlservice.azurewebsites.net"//"https://localhost:7114";
 
+// returns url object
 export const getShortUrl = async (url) => {
-    const shortUrl = await fetch(`${baseAPI}/Url/CreateUrl?OriginalUrl=${url}`, {
-        method: "POST"
-    });
+    try{
+        const shortUrl = await fetch(`${baseAPI}/Url`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                originalUrl: url,
+            })
+        });
+        return await shortUrl.json();
+    }catch(error){
+        console.log(error)
+    }
 
-    return await shortUrl.json();
+
 }
 
+// returns url object
 export const getOriginalUrl = async (slug) => {
-    const originalUrl = await fetch(`${baseAPI}/Url/GetOriginalUrl?Slug=${slug}`, {
-        method: "GET",
-        headers:{
-            "Content-Type": "text/plain"
-        }
+    const originalUrl = await fetch(`${baseAPI}/Url/${slug}`, {
+        method: "GET"
     });
 
-    return await originalUrl.text();
+    return await originalUrl.json();
 };
 
 export const validateUrl = (url) => {
